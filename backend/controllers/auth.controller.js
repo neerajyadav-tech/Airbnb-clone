@@ -6,6 +6,8 @@ export const sighUp = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    console.log(req.body);
+
     if (!name || !email || !password) {
       return res.status(400).json({ message: "All fields required" });
     }
@@ -38,7 +40,7 @@ export const sighUp = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: `signup error: ${error.message}`
+      message: error.message
     });
   }
 };
