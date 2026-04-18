@@ -1,12 +1,11 @@
 import genToken from "../config/token.js"
 import User from "../model/user.model.js"
 import bcrypt from "bcryptjs"
-
 export const sighUp = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    console.log("BODY:", req.body);
 
-    console.log(req.body);
+    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: "All fields required" });
@@ -26,19 +25,10 @@ export const sighUp = async (req, res) => {
       password: hashPassword
     });
 
-    const token = await genToken(user._id);
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENVIRONMENT === "production",
-      sameSite: process.env.NODE_ENVIRONMENT === "production" ? "none" : "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000
-    });
-
     return res.status(201).json(user);
 
   } catch (error) {
-    console.log(error);
+    console.log("ERROR:", error);
     return res.status(500).json({
       message: error.message
     });
