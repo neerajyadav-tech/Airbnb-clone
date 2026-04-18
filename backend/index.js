@@ -25,8 +25,8 @@ app.use("/api/user", userRouter )
 app.use("/api/listing",listingRouter )
 app.use("/api/booking",bookingRouter )
 
-
-app.listen(port,()=>{
-    connectDb()
-    console.log("server started")
-})
+connectDb().then(() => {
+    app.listen(port, () => {
+        console.log("server started on", port);
+    });
+});
